@@ -11,7 +11,7 @@ def show_outside_temp(display):
     # --- Define colors ---
     BLACK = display.create_pen(0, 0, 0)
     CYAN = display.create_pen(0, 255, 255)
-    WHITE = display.create_pen(255, 255, 255)
+    WHITE = display.create_pen(255, 255, 200)
     RED = display.create_pen(255, 0, 0)
 
     # --- Show "Fetching..." message ---
