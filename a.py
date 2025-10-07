@@ -10,7 +10,7 @@ def celsius_to_fahrenheit(c):
 def show_outside_temp(display):
     # --- Define colors ---
     BLACK = display.create_pen(0, 0, 0)
-    CYAN = display.create_pen(0, 255, 255)
+    CYAN = display.create_pen(0, 255, 254)
     WHITE = display.create_pen(255, 255, 200)
     RED = display.create_pen(255, 0, 0)
 
