@@ -1,7 +1,9 @@
-# This is main.py - with "Room Temperature" label added
+# This is main.py - Now with Wi-Fi connection at startup
 
 import machine
 import time
+import network  # Added for Wi-Fi
+import secrets  # Added for Wi-Fi
 from pimoroni import Button, RGBLED
 from picographics import PicoGraphics, DISPLAY_PICO_DISPLAY, PEN_P4
 import a
@@ -24,6 +26,8 @@ display.set_font("bitmap8")
 WHITE = display.create_pen(255, 255, 255)
 BLACK = display.create_pen(0, 0, 0)
 GREY = display.create_pen(120, 120, 120)
+RED = display.create_pen(255, 0, 0)
+GREEN = display.create_pen(0, 255, 0)
 LIQUID_COLOUR = display.create_pen(0, 0, 255)
 
 # --- Thermometer Constants ---
@@ -35,7 +39,42 @@ T_WIDTH = 25
 T_HEIGHT = HEIGHT - 55
 T_BULB_RADIUS = 12
 
-OUTSIDE_TEMP_C = 15.5
+# --- NEW: Connect to Wi-Fi at Startup ---
+display.set_pen(BLACK)
+display.clear()
+display.set_pen(WHITE)
+display.text("Connecting to Wi-Fi...", 10, 10, scale=2)
+display.update()
+
+wlan = network.WLAN(network.STA_IF)
+wlan.active(True)
+wlan.connect(secrets.WIFI_SSID, secrets.WIFI_PASSWORD)
+
+# Wait for connection with a 10-second timeout
+max_wait = 10
+while max_wait > 0:
+    if wlan.status() < 0 or wlan.status() >= 3:
+        break
+    max_wait -= 1
+    print('waiting for connection...')
+    time.sleep(1)
+
+# Handle connection success or failure
+if wlan.status() != 3:
+    display.set_pen(RED)
+    display.text("Wi-Fi Failed!", 10, 40, scale=3)
+    display.update()
+    time.sleep(5) # Show error for 5 seconds
+else:
+    print('connected')
+    status = wlan.ifconfig()
+    print('ip = ' + status[0])
+    display.set_pen(GREEN)
+    display.text("Connected!", 10, 40, scale=3)
+    display.update()
+    time.sleep(2) # Show success for 2 seconds
+# --- End of Wi-Fi Connection Block ---
+
 
 # --- Helper Functions ---
 def celsius_to_fahrenheit(c):
@@ -49,16 +88,14 @@ def temperature_to_color_rgb(temp):
         return 255, 0, 0
     p = map_value(temp, TEMP_MIN, HOT_THRESHOLD_C, 0.0, 1.0)
     p = max(0.0, min(1.0, p))
-    r = 0
-    g = int(map_value(p, 0.0, 1.0, 0, 255))
-    b = int(map_value(p, 0.0, 1.0, 255, 0))
+    r, g, b = 0, int(map_value(p, 0.0, 1.0, 0, 255)), int(map_value(p, 0.0, 1.0, 255, 0))
     return r, g, b
 
 # --- Main Loop ---
 while True:
     if button_a.read():
-        outside_f = celsius_to_fahrenheit(OUTSIDE_TEMP_C)
-        a.show_outside_temp(display, OUTSIDE_TEMP_C, outside_f)
+        # The call to a.py is now much simpler
+        a.show_outside_temp(display)
     else:
         reading = sensor_temp.read_u16() * (3.3 / 65535)
         temp_c = 27 - (reading - 0.706) / 0.001721
@@ -82,7 +119,7 @@ while True:
         display.set_pen(LIQUID_COLOUR)
         display.circle(T_X + T_WIDTH // 2, T_Y + T_HEIGHT, T_BULB_RADIUS - 3)
         if liquid_y_start < (T_Y + T_HEIGHT):
-          display.rectangle(T_X + 3, int(liquid_y_start), T_WIDTH - 6, int(T_Y + T_HEIGHT - liquid_y_start))
+            display.rectangle(T_X + 3, int(liquid_y_start), T_WIDTH - 6, int(T_Y + T_HEIGHT - liquid_y_start))
         
         display.set_pen(WHITE)
         celsius_text = f"{temp_c:.1f}°C"
@@ -92,7 +129,6 @@ while True:
         fahrenheit_text = f"{temp_f:.1f}°F"
         display.text(fahrenheit_text, 15, 65, scale=4)
         
-        # --- NEW LINE ADDED HERE ---
         display.text("Room Temp", 15, 105, scale=2)
         
         display.update()
