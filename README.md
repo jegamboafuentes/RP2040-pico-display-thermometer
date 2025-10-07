@@ -1,7 +1,3 @@
-Of course\! I'd be happy to create a new, comprehensive `README.md` file for your awesome project. Based on all the features you've added, here is the updated documentation.
-
------
-
 # Pico Smart Display: Thermometer, Weather & Crypto Ticker
 
 This project started as a simple way to repurpose a Raspberry Pi Pico that I had on hand. My apartment thermostat is very old and doesn't have a display, so I wanted a convenient way to always know the temperature in my room. From there, it evolved into a multi-functional smart display that now provides weather information and real-time cryptocurrency prices, all on a vibrant Pimoroni Pico Display.
@@ -68,3 +64,5 @@ This project runs on the Pimoroni-flavored MicroPython.
 Using an editor like [Thonny](https://thonny.org/), connect to your Pico and create the following files.
 
   * **`secrets.py`**: This file is required to store your Wi-Fi credentials. It should contain:
+
+  ![Pico Thermometer](assets/device.jpg)
