@@ -24,7 +24,7 @@ button_b = Button(13)
 button_x = Button(14)
 button_y = Button(15)
 
-display.set_backlight(0.5)
+display.set_backlight(0.7)
 WIDTH, HEIGHT = display.get_bounds()
 display.set_font("bitmap8")
 
@@ -140,7 +140,7 @@ while True:
         celsius_text = f"{temp_c:.1f}°C"
         display.text(celsius_text, 15, 25, scale=4)
         
-        display.set_pen(pens["GREY"])
+        display.set_pen(pens["WHITE"])
         fahrenheit_text = f"{temp_f:.1f}°F"
         display.text(fahrenheit_text, 15, 65, scale=4)
         
