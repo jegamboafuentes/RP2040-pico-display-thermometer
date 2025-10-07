@@ -56,6 +56,10 @@ display.clear()
 display.set_pen(pens["WHITE"])
 display.text("Connecting to Wi-Fi...", 10, 10, scale=2)
 display.update()
+
+# --- STABILIZATION DELAY ADDED HERE ---
+time.sleep(1) 
+
 wlan = network.WLAN(network.STA_IF)
 wlan.active(True)
 wlan.connect(secrets.WIFI_SSID, secrets.WIFI_PASSWORD)
@@ -64,7 +68,6 @@ while max_wait > 0:
     if wlan.status() < 0 or wlan.status() >= 3:
         break
     max_wait -= 1
-    # --- LOG ADDED BACK ---
     print('waiting for connection...')
     time.sleep(1)
 
@@ -74,7 +77,6 @@ if wlan.status() != 3:
     display.update()
     time.sleep(5)
 else:
-    # --- LOGS ADDED BACK ---
     print('connected')
     status = wlan.ifconfig()
     print('ip = ' + status[0])

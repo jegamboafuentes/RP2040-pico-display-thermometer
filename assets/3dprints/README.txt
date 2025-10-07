@@ -1,0 +1,4 @@
+Raspberry Pico + Pico Display Pack case 2.0 by Morvar on Thingiverse: https://www.thingiverse.com/thing:4767008
+
+Summary:
+Update 2.1 Updated the screen cover with even more free space for safer installation. Also removed a tiny visual screen angle adjustment as my first screen just seemed to be faulty.Update 2.0 - Added a screen cover with button extensions. Make sure to place the screen cover really carefully as I've already broken one and thus wanted to make this update.You can choose either 4mm or 5mm buttons for your liking. Old case (PicoCase.stl) still available in the files.1.0 - A simple case to hold Raspberry Pico with Pico Display Pack attached.Features a perfectly fitting hole for the Micro-USB slot and Pico itself snaps to the case from the 2 knobs of the bottom so you can even shake it and it'll hold. Just push from Raspberry logo of the board if you need to take it out.

@@ -4,6 +4,8 @@ This project started as a simple way to repurpose a Raspberry Pi Pico that I had
 
 -----
 
+![Pico Thermometer Main](assets/Thermometer%20.GIF)
+
 ## Features
 
   * **Live Room Thermometer:** The default screen shows the current room temperature in both Celsius and Fahrenheit, with a dynamic graphical thermometer.
@@ -23,21 +25,31 @@ The device boots up into the **Room Thermometer** mode. You can then use the fou
 
 This is the default view. It uses the Pico's onboard temperature sensor to display the ambient room temperature. The thermometer graphic fills up and changes color from cool blue to hot red as the temperature rises.
 
+  ![Pico Thermometer Main](assets/mainScreen.jpg)
+
 ### Button A: Outside Temperature
 
 Pressing the **'A' button** fetches and displays the current weather conditions for Boston.
+
+![Pico Thermometer Main](assets/a.jpg)
 
 ### Button B: Ethereum Price
 
 Pressing the **'B' button** fetches the latest price for Ethereum in USD from the CoinGecko API.
 
+![Pico Thermometer Main](assets/b.jpg)
+
 ### Button X: Weather Forecast
 
 Pressing the **'X' button** shows the current weather conditions, plus the forecast for the next 3 and 6 hours.
 
+![Pico Thermometer Main](assets/x.jpg)
+
 ### Button Y: Solana Price
 
 Pressing the **'Y' button** fetches the latest price for Solana in USD from the CoinGecko API.
+
+![Pico Thermometer Main](assets/y.jpg)
 
 -----
 
@@ -66,3 +78,6 @@ Using an editor like [Thonny](https://thonny.org/), connect to your Pico and cre
   * **`secrets.py`**: This file is required to store your Wi-Fi credentials. It should contain:
 
   ![Pico Thermometer](assets/device.jpg)
+
+  ## 3D Print files
+  This Project contains the 3D files to 3D print the case as shown, it contains a slightly anguled case to place on a wall, and original case files.
