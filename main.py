@@ -9,6 +9,7 @@ from picographics import PicoGraphics, DISPLAY_PICO_DISPLAY, PEN_P4
 import a
 import b
 import y
+import x # <-- ADD THIS LINE
 
 # --- User Settings ---
 LED_BRIGHTNESS = 0.01
@@ -20,6 +21,7 @@ sensor_temp = machine.ADC(4)
 led = RGBLED(6, 7, 8)
 button_a = Button(12)
 button_b = Button(13)
+button_x = Button(14) # <-- ADD THIS LINE
 button_y = Button(15)
 
 display.set_backlight(0.5)
@@ -74,7 +76,7 @@ else:
     time.sleep(2)
 
 
-# --- Helper Functions (This section was missing) ---
+# --- Helper Functions ---
 def celsius_to_fahrenheit(c):
     return (c * 9/5) + 32
 
@@ -96,12 +98,16 @@ while True:
         a.show_outside_temp(display)
     elif button_b.read():
         b.show_eth_price(display)
+    # v-- ADD THIS BLOCK --v
+    elif button_x.read():
+        x.show_weather_forecast(display)
+    # ^-- ADD THIS BLOCK --^
     elif button_y.read():
         y.show_sol_price(display)
     else:
         reading = sensor_temp.read_u16() * (3.3 / 65535)
         temp_c = 27 - (reading - 0.706) / 0.001721
-        temp_f = celsius_to_fahrenheit(temp_c) # This line will work now
+        temp_f = celsius_to_fahrenheit(temp_c)
         
         display.set_pen(BLACK)
         display.clear()
