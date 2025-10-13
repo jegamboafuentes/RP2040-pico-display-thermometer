@@ -14,6 +14,10 @@ import x
 # --- User Settings ---
 LED_BRIGHTNESS = 0.01
 HOT_THRESHOLD_C = 25.0
+# --- NEW: Temperature offset for calibration ---
+# The sensor is in a case, so it reads a bit high.
+# Subtract 3.3 degrees to get the real room temperature.
+TEMP_OFFSET_C = -3.3
 
 # --- Hardware Setup ---
 display = PicoGraphics(display=DISPLAY_PICO_DISPLAY, pen_type=PEN_P4, rotate=0)
@@ -58,7 +62,7 @@ display.text("Connecting to Wi-Fi...", 10, 10, scale=2)
 display.update()
 
 # --- STABILIZATION DELAY ADDED HERE ---
-time.sleep(1) 
+time.sleep(1)
 
 wlan = network.WLAN(network.STA_IF)
 wlan.active(True)
@@ -80,7 +84,7 @@ else:
     print('connected')
     status = wlan.ifconfig()
     print('ip = ' + status[0])
-    
+
     display.set_pen(pens["GREEN"])
     display.text("Connected!", 10, 40, scale=3)
     display.update()
@@ -115,9 +119,14 @@ while True:
         y.show_sol_price(display, pens)
     else:
         reading = sensor_temp.read_u16() * (3.3 / 65535)
-        temp_c = 27 - (reading - 0.706) / 0.001721
-        temp_f = celsius_to_fahrenheit(temp_c)
+        # Calculate the raw temperature first
+        raw_temp_c = 27 - (reading - 0.706) / 0.001721
+        # Apply the calibration offset
+        temp_c = raw_temp_c + TEMP_OFFSET_C
         
+        # Fahrenheit conversion is now based on the corrected temp
+        temp_f = celsius_to_fahrenheit(temp_c)
+
         display.set_pen(pens["BLACK"])
         display.clear()
 
@@ -137,17 +146,17 @@ while True:
         display.circle(T_X + T_WIDTH // 2, T_Y + T_HEIGHT, T_BULB_RADIUS - 3)
         if liquid_y_start < (T_Y + T_HEIGHT):
             display.rectangle(T_X + 3, int(liquid_y_start), T_WIDTH - 6, int(T_Y + T_HEIGHT - liquid_y_start))
-        
+
         display.set_pen(pens["WHITE"])
         celsius_text = f"{temp_c:.1f}°C"
         display.text(celsius_text, 15, 25, scale=4)
-        
+
         display.set_pen(pens["WHITE"])
         fahrenheit_text = f"{temp_f:.1f}°F"
         display.text(fahrenheit_text, 15, 65, scale=4)
-        
+
         display.text("Room Temp", 15, 105, scale=2)
-        
+
         display.update()
 
     time.sleep(0.1)
