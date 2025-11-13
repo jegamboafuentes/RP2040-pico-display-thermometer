@@ -2,6 +2,8 @@
 
 This project started as a simple way to repurpose a Raspberry Pi Pico that I had on hand. My apartment thermostat is very old and doesn't have a display, so I wanted a convenient way to always know the temperature in my room. From there, it evolved into a multi-functional smart display that now provides weather information and real-time cryptocurrency prices, all on a vibrant Pimoroni Pico Display.
 
+I wrote a post about this project: [Link](https://jegamboafuentes.medium.com/my-apartment-is-an-oven-so-i-built-this-pico-smart-display-696c62dfd345).
+
 -----
 
 ![Pico Thermometer Main](assets/Thermometer%20.GIF)
